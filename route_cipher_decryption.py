@@ -35,13 +35,14 @@ import sys
 # USER INPUT
 
 # String to decrypt (in triple quotes)
-CIPHERTEXT = """16 12 8 4 0 1 5 9 13 17 18 14 10 6 2 3 7 11 15 19"""
+CIPHERTEXT = """THIS OFF DETAINED ASCERTAIN WAYLAND CORRESPONDENTS OF AT \
+WHY AND IF FILLS IT YOU GET THEY NEPTUNE THE TRIBUNE PLEASE ARE THEM CAN UP"""
 
 # Number of columns in transposition matrix
 COLS = 4
 
 # Number of rows in transposition matrix
-ROWS = 5
+ROWS = 6
 
 # Key: Column numbers in the order they are to be read
 # Positive for reading down, negative for reading up
