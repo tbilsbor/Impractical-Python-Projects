@@ -50,23 +50,6 @@ KEY = "-1 2 -3 4"
 # END OF USER INPUT
 #=============================================================================
 
-#def decrypt(rows, key, cipherlist):
-#    """Process the actual decryption"""
-#    translation_matrix = []
-#    translation_string = ""
-#    for number in key:
-#        number = int(number)
-#        start = (abs(number) - 1) * ROWS
-#        end = start + rows
-#        row = cipherlist[start:end]
-#        if number > 0:
-#            row = row[::-1]
-#        translation_matrix.append(row)
-#    for _ in range(rows):
-#        for row in translation_matrix:
-#            translation_string += "{} ".format(str(row.pop()))
-#    return translation_string
-
 def decrypt(rows, cols, key, cipherlist):
     """Process the actual decryption"""
     translation_matrix = []
