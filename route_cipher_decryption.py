@@ -35,37 +35,55 @@ import sys
 # USER INPUT
 
 # String to decrypt (in triple quotes)
-CIPHERTEXT = """THIS OFF DETAINED ASCERTAIN WAYLAND CORRESPONDENTS OF AT \
-WHY AND IF FILLS IT YOU GET THEY NEPTUNE THE TRIBUNE PLEASE ARE THEM CAN UP"""
+CIPHERTEXT = """16 12 8 4 0 1 5 9 13 17 18 14 10 6 2 3 7 11 15 19"""
 
 # Number of columns in transposition matrix
 COLS = 4
 
 # Number of rows in transposition matrix
-ROWS = 6
+ROWS = 5
 
 # Key: Column numbers in the order they are to be read
 # Positive for reading down, negative for reading up
-KEY = """-1 2 -3 4"""
+KEY = "-1 2 -3 4"
 
 # END OF USER INPUT
 #=============================================================================
 
-def decrypt(rows, key, cipherlist):
+#def decrypt(rows, key, cipherlist):
+#    """Process the actual decryption"""
+#    translation_matrix = []
+#    translation_string = ""
+#    for number in key:
+#        number = int(number)
+#        start = (abs(number) - 1) * ROWS
+#        end = start + rows
+#        row = cipherlist[start:end]
+#        if number > 0:
+#            row = row[::-1]
+#        translation_matrix.append(row)
+#    for _ in range(rows):
+#        for row in translation_matrix:
+#            translation_string += "{} ".format(str(row.pop()))
+#    return translation_string
+
+def decrypt(rows, cols, key, cipherlist):
     """Process the actual decryption"""
     translation_matrix = []
     translation_string = ""
-    for number in key:
-        number = int(number)
-        start = (abs(number) - 1) * ROWS
+    for c in range(cols):
+        start = c * rows
         end = start + rows
         row = cipherlist[start:end]
-        if number > 0:
-            row = row[::-1]
         translation_matrix.append(row)
-    for _ in range(rows):
-        for row in translation_matrix:
-            translation_string += "{} ".format(str(row.pop()))
+    for i, number in enumerate(key):
+        if int(number) > 0:
+            translation_matrix[i] = \
+            translation_matrix[i][::-1]
+    for i in range(rows):
+        for number in key:
+            number = abs(int(number)) - 1
+            translation_string += "{} ".format(translation_matrix[number].pop())
     return translation_string
 
 def validate_cols_rows(cipherlist):
@@ -98,7 +116,7 @@ def main():
     validate_cols_rows(cipherlist)
     keylist = KEY.split(" ")
     validate_key(keylist)
-    translation_string = decrypt(ROWS, keylist, cipherlist)
+    translation_string = decrypt(ROWS, COLS, keylist, cipherlist)
 
     print("\n")
     print("ENCRYPTED TEXT:\n")
