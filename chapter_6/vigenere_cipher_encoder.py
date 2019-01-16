@@ -45,12 +45,17 @@ is weak, so I'm going to design my own encoder
 in a word processor, the spellchecker immediately freaks out and underlines
 all of the ciphertext, revealing its presence
 
+Updates
+- Updated program to check for number of blank lines, as per the chapter
+6 practice project
+
 """
 
 import docx
 from docx.shared import RGBColor, Pt
 import string
 from itertools import cycle
+import sys
 
 def load_fake_text(file):
     """Return list of paragraph text from message"""
@@ -62,6 +67,16 @@ def load_real_text(file):
     blank lines"""
     text = docx.Document(file)
     return [p.text for p in text.paragraphs if len(p.text) > 0]
+
+def verify_lines(fake_text, real_text):
+    """Verifies that there are enough blank lines in the fake text
+    to hold the message"""
+    blank_line_count = fake_text.count("")
+    real_line_count = len(real_text)
+    if blank_line_count < real_line_count:
+        print("\nInsufficient blank lines in fake message")
+        print("Terminating")
+        sys.exit()
 
 def set_spacing(paragraph):
     """Use docx to set line spacing between paragraphs
@@ -122,15 +137,17 @@ def main():
     Interleave the fake message and the cipher."""
     fake_list = load_fake_text('fakeMessage.docx')
     real_list = load_real_text('realMessage.docx')
+    verify_lines(fake_list, real_list)
     key = "splendiferous"
     cipher_list = encode_vigenere(real_list, key)
     
     # Add letterhead to template
     doc = docx.Document('template.docx')
     doc.add_heading('Morland Holmes', 0) # 0 for max heading
+    # 1 for subtitle heading
     subtitle = doc.add_heading('Global Consulting & Negotiations', 1)
     subtitle.alignment = 1
-    doc.add_heading('', 1) # 1 for subtitle heading
+    doc.add_heading('', 1)
     doc.add_paragraph('January 14, 2019')
     doc.add_paragraph('')
     
