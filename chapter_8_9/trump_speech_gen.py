@@ -88,7 +88,7 @@ def select_word(options):
     return word
 
 def main():
-    """"""
+    """Interactively generates a Trump speech using Markov chains"""
     # Load and prep training files
     raw_speech_text = hg.load_training_file('trump_train.txt')
     speech_text = hg.prep_training(raw_speech_text)
